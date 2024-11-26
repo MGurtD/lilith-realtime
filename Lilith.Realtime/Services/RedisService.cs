@@ -22,6 +22,7 @@ public class RedisService
 
         // Serializar el objeto a JSON
         var serializedValue = JsonSerializer.Serialize(value); 
+
         // Guardar en Redis
         await db.StringSetAsync(key, serializedValue);
 
@@ -32,10 +33,17 @@ public class RedisService
         await _hubContext.Clients.Group(tag).SendAsync("TagUpdated", tag, key, value);
     }
 
-    public async Task<string?> GetCacheAsync(string key)
+    public async Task<JsonElement?> GetCacheAsync(string key)
     {
         var db = _redis.GetDatabase();
-        return await db.StringGetAsync(key);
+        var value = await db.StringGetAsync(key);
+
+        if (!value.HasValue)
+        {
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<JsonElement>(value.ToString());
     }
 
     public async Task RemoveCacheAsync(string key, string tag)

@@ -27,12 +27,6 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Redis Cache API",
         Version = "v1",
         Description = "API para interactuar con Redis utilizando tags y notificaciones en tiempo real con SignalR.",
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
-        {
-            Name = "Lilith.Realtime",
-            Email = "dev@zenith.io",
-            Url = new Uri("https://zenith.io")
-        }
     });
 });
 
@@ -40,11 +34,8 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
