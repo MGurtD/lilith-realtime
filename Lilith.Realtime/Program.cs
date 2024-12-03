@@ -1,3 +1,4 @@
+using Lilith.Realtime.Filters;
 using Lilith.Realtime.Hubs;
 using Lilith.Realtime.Services;
 using StackExchange.Redis;
@@ -17,7 +18,11 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 // Agrega RedisService al contenedor
 builder.Services.AddScoped<RedisService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidateModelFilter>();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -26,7 +31,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Redis Cache API",
         Version = "v1",
-        Description = "API para interactuar con Redis utilizando tags y notificaciones en tiempo real con SignalR.",
+        Description = "API para interactuar con Redis y notificaciones en tiempo real con SignalR.",
     });
 });
 
