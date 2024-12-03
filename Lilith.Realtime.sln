@@ -5,9 +5,8 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lilith.Realtime", "Lilith.Realtime\Lilith.Realtime.csproj", "{6A71042C-805E-48A9-AE50-021C53CC38EE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{3F4DB76E-3091-455E-826A-C4A6D3047815}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7086E583-8CCC-4A4C-BEC8-6A6A18DBA813}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
