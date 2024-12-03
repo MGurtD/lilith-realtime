@@ -16,7 +16,7 @@ public class RedisService
         _hubContext = hubContext;
     }
 
-    public async Task SetCacheAsync(string key, JsonElement value, string tag)
+    public async Task SetCacheAsync(string key, JsonElement value)
     {
         var db = _redis.GetDatabase();
 
@@ -26,11 +26,8 @@ public class RedisService
         // Guardar en Redis
         await db.StringSetAsync(key, serializedValue);
 
-        // Asociar la clave al tag
-        await db.SetAddAsync(tag, key);
-
         // Notificar a los suscriptores del tag
-        await _hubContext.Clients.Group(tag).SendAsync("TagUpdated", tag, key, value);
+        await _hubContext.Clients.Group(key).SendAsync("KeyUpdated", key, value);
     }
 
     public async Task<JsonElement?> GetCacheAsync(string key)
@@ -46,7 +43,7 @@ public class RedisService
         return JsonSerializer.Deserialize<JsonElement>(value.ToString());
     }
 
-    public async Task RemoveCacheAsync(string key, string tag)
+    public async Task RemoveCacheAsync(string key)
     {
         var db = _redis.GetDatabase();
 
@@ -54,6 +51,6 @@ public class RedisService
         await db.KeyDeleteAsync(key);
 
         // Notificar a los suscriptores del tag
-        await _hubContext.Clients.Group(tag).SendAsync("TagDeleted", tag, key);
+        await _hubContext.Clients.Group(key).SendAsync("KeyDeleted", key);
     }
 }

@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Lilith.Realtime.Controllers;
 
 using Lilith.Realtime.Contracts;
@@ -20,7 +18,7 @@ public class CacheController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SetCache([FromBody] CacheRequest request)
     {
-        await _redisService.SetCacheAsync(request.Key, request.Value, request.Tag);
+        await _redisService.SetCacheAsync(request.Key, request.Value);
         return Ok();
     }
 
@@ -32,9 +30,9 @@ public class CacheController : ControllerBase
     }
 
     [HttpDelete("{key}")]
-    public async Task<IActionResult> RemoveCache(string key, [FromQuery] string tag)
+    public async Task<IActionResult> RemoveCache(string key)
     {
-        await _redisService.RemoveCacheAsync(key, tag);
+        await _redisService.RemoveCacheAsync(key);
         return NoContent();
     }
 }

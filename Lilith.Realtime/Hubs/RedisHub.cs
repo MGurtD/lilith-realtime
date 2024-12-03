@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.SignalR;
 
 public class RedisHub : Hub
 {
-    public async Task SubscribeToTag(string tag)
+    public async Task SubscribeToKey(string key)
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, tag);
+        await Groups.AddToGroupAsync(Context.ConnectionId, key);
     }
 
-    public async Task UnsubscribeFromTag(string tag)
+    public async Task UnsubscribeFromTag(string key)
     {
-        await Groups.RemoveFromGroupAsync(Context.ConnectionId, tag);
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, key);
     }
 }
