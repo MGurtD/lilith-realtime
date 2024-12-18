@@ -26,8 +26,8 @@ public class RedisService
         // Guardar en Redis
         await db.StringSetAsync(key, serializedValue);
 
-        // Notificar a los suscriptores del tag
-        await _hubContext.Clients.Group(key).SendAsync("KeyUpdated", key, value);
+        // Notificar a los suscriptores
+        await _hubContext.Clients.All.SendAsync($"{key}.updated", key, value);
     }
 
     public async Task<JsonElement?> GetCacheAsync(string key)
@@ -51,6 +51,6 @@ public class RedisService
         await db.KeyDeleteAsync(key);
 
         // Notificar a los suscriptores del tag
-        await _hubContext.Clients.Group(key).SendAsync("KeyDeleted", key);
+        await _hubContext.Clients.All.SendAsync($"{key}.deleted", key);
     }
 }
