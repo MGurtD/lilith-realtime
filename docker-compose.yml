@@ -2,13 +2,16 @@
   app:
     container_name: lilith-realtime
     ports:
-      - "8101:80" # Exponer el puerto 8101
+      - "8081:80" # Mapea el puerto 8080 del host al puerto 80 del contenedor
+      - "8082:443" # Puerto HTTPS
     build:
       context: .
     networks:
       network:
     environment:
-      - Redis:ConnectionString=localhost:6379
+      - REDIS__CONNECTIONSTRING=redis:6379
+      - CORS__ALLOWEDORIGINS=http://localhost:8100,https://yourfrontenddomain.com
+      - ASPNETCORE_URLS=http://+:80;https://+:443
 
   redis:
     image: redis:latest

@@ -27,4 +27,4 @@ RUN mkdir -p /files
 RUN apk add --no-cache tzdata icu-libs
 
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Api.dll"]
+ENTRYPOINT ["dotnet", "Lilith.Realtime.dll"]
